@@ -1,8 +1,8 @@
-class Channel {
-  String url;
-  String title;
-  Channel({this.url, this.title});
-  factory Channel.fromJson(map) {
-    return Channel(title: map['title'], url: map['link']);
-  }
+import 'package:moor_flutter/moor_flutter.dart';
+
+class Channels extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  TextColumn get channelName => text().nullable()();
+  TextColumn get channelLink => text().nullable()();
+   TextColumn get channelCategory => text().nullable()();
 }
