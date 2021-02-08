@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:iptv/models/channel.dart';
+import 'package:iptv/models/user.dart';
 import 'package:moor_flutter/moor_flutter.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart' as paths;
@@ -7,7 +8,7 @@ import 'package:path_provider/path_provider.dart' as paths;
 
 part 'moor_curd.g.dart';
 
-@UseMoor(tables: [Channels])
+@UseMoor(tables: [Channels,Users])
 class AppDatabase extends _$AppDatabase {
   static AppDatabase _db = _constructDb();
 

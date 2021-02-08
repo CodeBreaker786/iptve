@@ -37,6 +37,8 @@ dependencies:
   m3u: ^1.0.3
   flick_video_player: ^0.1.1 
   video_player: ^0.10.8+1
+  font_awesome_flutter: ^8.11.0
+  shared_preferences: ^0.5.12+4
   moor_flutter: ^3.1.0
   path_provider: ^1.6.14
    

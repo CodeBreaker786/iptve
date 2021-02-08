@@ -29,11 +29,7 @@ class _PlayerScreen2State extends State<PlayerScreen2> {
   }
 
   @override
-  void didChangeDependencies() {
-    flickManager.handleChangeVideo(
-      VideoPlayerController.network(
-          widget.channelList.entries.elementAt(listIndex).value.first.link),
-    );
+  void didChangeDependencies() { 
     super.didChangeDependencies();
   }
 

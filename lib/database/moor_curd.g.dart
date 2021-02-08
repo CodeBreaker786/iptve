@@ -304,12 +304,285 @@ class $ChannelsTable extends Channels with TableInfo<$ChannelsTable, Channel> {
   }
 }
 
+class User extends DataClass implements Insertable<User> {
+  final int id;
+  final String name;
+  final String username;
+  final String password;
+  User({@required this.id, this.name, this.username, this.password});
+  factory User.fromData(Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    final stringType = db.typeSystem.forDartType<String>();
+    return User(
+      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
+      name: stringType.mapFromDatabaseResponse(data['${effectivePrefix}name']),
+      username: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}username']),
+      password: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}password']),
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || id != null) {
+      map['id'] = Variable<int>(id);
+    }
+    if (!nullToAbsent || name != null) {
+      map['name'] = Variable<String>(name);
+    }
+    if (!nullToAbsent || username != null) {
+      map['username'] = Variable<String>(username);
+    }
+    if (!nullToAbsent || password != null) {
+      map['password'] = Variable<String>(password);
+    }
+    return map;
+  }
+
+  UsersCompanion toCompanion(bool nullToAbsent) {
+    return UsersCompanion(
+      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
+      name: name == null && nullToAbsent ? const Value.absent() : Value(name),
+      username: username == null && nullToAbsent
+          ? const Value.absent()
+          : Value(username),
+      password: password == null && nullToAbsent
+          ? const Value.absent()
+          : Value(password),
+    );
+  }
+
+  factory User.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return User(
+      id: serializer.fromJson<int>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      username: serializer.fromJson<String>(json['username']),
+      password: serializer.fromJson<String>(json['password']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'name': serializer.toJson<String>(name),
+      'username': serializer.toJson<String>(username),
+      'password': serializer.toJson<String>(password),
+    };
+  }
+
+  User copyWith({int id, String name, String username, String password}) =>
+      User(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        username: username ?? this.username,
+        password: password ?? this.password,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('User(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('username: $username, ')
+          ..write('password: $password')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(id.hashCode,
+      $mrjc(name.hashCode, $mrjc(username.hashCode, password.hashCode))));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is User &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.username == this.username &&
+          other.password == this.password);
+}
+
+class UsersCompanion extends UpdateCompanion<User> {
+  final Value<int> id;
+  final Value<String> name;
+  final Value<String> username;
+  final Value<String> password;
+  const UsersCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.username = const Value.absent(),
+    this.password = const Value.absent(),
+  });
+  UsersCompanion.insert({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.username = const Value.absent(),
+    this.password = const Value.absent(),
+  });
+  static Insertable<User> custom({
+    Expression<int> id,
+    Expression<String> name,
+    Expression<String> username,
+    Expression<String> password,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (username != null) 'username': username,
+      if (password != null) 'password': password,
+    });
+  }
+
+  UsersCompanion copyWith(
+      {Value<int> id,
+      Value<String> name,
+      Value<String> username,
+      Value<String> password}) {
+    return UsersCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      username: username ?? this.username,
+      password: password ?? this.password,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (username.present) {
+      map['username'] = Variable<String>(username.value);
+    }
+    if (password.present) {
+      map['password'] = Variable<String>(password.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('UsersCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('username: $username, ')
+          ..write('password: $password')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $UsersTable extends Users with TableInfo<$UsersTable, User> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $UsersTable(this._db, [this._alias]);
+  final VerificationMeta _idMeta = const VerificationMeta('id');
+  GeneratedIntColumn _id;
+  @override
+  GeneratedIntColumn get id => _id ??= _constructId();
+  GeneratedIntColumn _constructId() {
+    return GeneratedIntColumn('id', $tableName, false,
+        hasAutoIncrement: true, declaredAsPrimaryKey: true);
+  }
+
+  final VerificationMeta _nameMeta = const VerificationMeta('name');
+  GeneratedTextColumn _name;
+  @override
+  GeneratedTextColumn get name => _name ??= _constructName();
+  GeneratedTextColumn _constructName() {
+    return GeneratedTextColumn(
+      'name',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _usernameMeta = const VerificationMeta('username');
+  GeneratedTextColumn _username;
+  @override
+  GeneratedTextColumn get username => _username ??= _constructUsername();
+  GeneratedTextColumn _constructUsername() {
+    return GeneratedTextColumn(
+      'username',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _passwordMeta = const VerificationMeta('password');
+  GeneratedTextColumn _password;
+  @override
+  GeneratedTextColumn get password => _password ??= _constructPassword();
+  GeneratedTextColumn _constructPassword() {
+    return GeneratedTextColumn(
+      'password',
+      $tableName,
+      true,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [id, name, username, password];
+  @override
+  $UsersTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'users';
+  @override
+  final String actualTableName = 'users';
+  @override
+  VerificationContext validateIntegrity(Insertable<User> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id'], _idMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name'], _nameMeta));
+    }
+    if (data.containsKey('username')) {
+      context.handle(_usernameMeta,
+          username.isAcceptableOrUnknown(data['username'], _usernameMeta));
+    }
+    if (data.containsKey('password')) {
+      context.handle(_passwordMeta,
+          password.isAcceptableOrUnknown(data['password'], _passwordMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  User map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return User.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  $UsersTable createAlias(String alias) {
+    return $UsersTable(_db, alias);
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
   $ChannelsTable _channels;
   $ChannelsTable get channels => _channels ??= $ChannelsTable(this);
+  $UsersTable _users;
+  $UsersTable get users => _users ??= $UsersTable(this);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [channels];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [channels, users];
 }
