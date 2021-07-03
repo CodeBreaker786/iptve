@@ -42,9 +42,9 @@ class CategoryScreen extends StatelessWidget {
                       style: TextStyle(color: Colors.white),
                     ),
                     trailing: Container(
-                      width: 50,
+                      width: 80,
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
                               channelList.entries
