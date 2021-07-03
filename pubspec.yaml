@@ -35,6 +35,9 @@ dependencies:
   shared_preferences: ^2.0.6
   moor_flutter: ^3.1.0
   path_provider: ^2.0.2
+  flutter_vlc_player: ^6.0.2
+  cdnbye: ^0.1.0
+  chewie: ^1.2.2
 
 dev_dependencies:
   moor_generator: ^3.3.1

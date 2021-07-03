@@ -1,11 +1,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           android:installLocation="preferExternal"
     package="com.arc360.iptv">
+    
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
    <application
         android:label="iptv"
         android:usesCleartextTraffic="true"
+       
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

@@ -21,7 +21,7 @@ class FetchTVChannel extends StatelessWidget {
               if (snapshot.connectionState == ConnectionState.done) {
                 List<M3uGenericEntry> prefData = snapshot.data;
                 if (snapshot.hasData) {
-                  List<String> groupsCollection = List<String>();
+                  List<String> groupsCollection =[];
                   Map<String, List<M3uGenericEntry>> channelWithGrouping =
                       Map<String, List<M3uGenericEntry>>();
                   prefData.forEach((element) {
