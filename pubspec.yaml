@@ -30,14 +30,14 @@ dependencies:
   http: ^0.13.3
   m3u: ^1.0.3
   flick_video_player: ^0.3.1
-  video_player: ^2.1.6
+  video_player:
   font_awesome_flutter: ^8.11.0
   shared_preferences: ^2.0.6
   moor_flutter: ^3.1.0
-  path_provider: ^2.0.2
+  path_provider: ^1.6.21
+  another_flushbar: ^1.10.22
+  yoyo_player: ^0.1.0
   flutter_vlc_player: ^6.0.2
-  cdnbye: ^0.1.0
-  chewie: ^1.2.2
 
 dev_dependencies:
   moor_generator: ^3.3.1

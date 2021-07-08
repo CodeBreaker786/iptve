@@ -185,19 +185,21 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                               onPressed: () {
                                 if (formkey.currentState.validate()) {
+                                  
                                   User user = User(
                                       name: _nameController.text,
                                       username: _userNameController.text,
                                       password: _passwordController.text);
-                                  widget.usersDao.insertUser(user).then((value) {
-                                    Navigator.push(
+                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 FetchTVChannel(
                                                   user: user,
                                                 )));
-                                  });
+                                  // widget.usersDao.insertUser(user).then((value) {
+                                   
+                                  // });
                                 }
                               }),
                         ),
