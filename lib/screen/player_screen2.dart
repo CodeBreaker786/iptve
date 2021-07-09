@@ -1,8 +1,6 @@
-import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:iptv/screen/player.dart';
 import 'package:m3u/m3u.dart';
-import 'package:video_player/video_player.dart';
 
 class PlayerScreen2 extends StatefulWidget {
   final Map<String, List<M3uGenericEntry>> channelList;
@@ -14,28 +12,19 @@ class PlayerScreen2 extends StatefulWidget {
 }
 
 class _PlayerScreen2State extends State<PlayerScreen2> {
-  FlickManager flickManager;
   int listIndex = 0;
   int playIndex = 0;
+  String activeURL = '';
   @override
   void initState() {
     super.initState();
-    flickManager = FlickManager(
-      videoPlayerController: VideoPlayerController.network(
-          widget.channelList.entries.elementAt(listIndex).value.first.link),
-    );
-
     listIndex = widget.index != null ? widget.index : 0;
-  }
-
-  @override
-  void didChangeDependencies() { 
-    super.didChangeDependencies();
+    activeURL =
+        widget.channelList.entries.elementAt(listIndex).value.first.link;
   }
 
   @override
   void dispose() {
-    flickManager.dispose();
     super.dispose();
   }
 
@@ -66,15 +55,15 @@ class _PlayerScreen2State extends State<PlayerScreen2> {
                           if (listIndex > 0) {
                             setState(() {
                               playIndex = 0;
-                              listIndex--;
-                              flickManager.handleChangeVideo(
-                                VideoPlayerController.network(widget
-                                    .channelList.entries
-                                    .elementAt(listIndex)
-                                    .value
-                                    .first
-                                    .link),
-                              );
+                              // listIndex--;
+                              // flickManager.handleChangeVideo(
+                              //   VideoPlayerController.network(widget
+                              //       .channelList.entries
+                              //       .elementAt(listIndex)
+                              //       .value
+                              //       .first
+                              //       .link),
+                              // );
                             });
                           }
                         },
@@ -94,14 +83,14 @@ class _PlayerScreen2State extends State<PlayerScreen2> {
                             setState(() {
                               playIndex = 0;
                               listIndex++;
-                              flickManager.handleChangeVideo(
-                                VideoPlayerController.network(widget
-                                    .channelList.entries
-                                    .elementAt(listIndex)
-                                    .value
-                                    .first
-                                    .link),
-                              );
+                              // flickManager.handleChangeVideo(
+                              // VideoPlayerController.network(widget
+                              //     .channelList.entries
+                              //     .elementAt(listIndex)
+                              //     .value
+                              //     .first
+                              //     .link),
+                              // );
                             });
                           }
                         },
@@ -120,15 +109,19 @@ class _PlayerScreen2State extends State<PlayerScreen2> {
                         color: Colors.transparent,
                         child: ListTile(
                           tileColor: Colors.transparent,
-                          onTap: () {
+                          onTap: () async {
                             playIndex = index;
-                            flickManager.handleChangeVideo(
-                              VideoPlayerController.network(widget
-                                  .channelList.values
+                            setState(() {
+                              activeURL = widget.channelList.values
                                   .elementAt(listIndex)[index]
-                                  .link),
-                            );
-                            setState(() {});
+                                  .link;
+                            });
+
+                            //autoPlay();
+
+                            // _player.fijk.setDataSource(
+                            //     'http://tvperiod.com:2052/14893545/123456/1549701',
+                            //     autoPlay: true);
                           },
                           leading: playIndex == index
                               ? Icon(
@@ -146,7 +139,7 @@ class _PlayerScreen2State extends State<PlayerScreen2> {
                                   .title,
                               style: TextStyle(color: Colors.white)),
                           // subtitle: Text(
-                          //     widget.channelList[index].attributes.values
+                          //     widget.channelList[index]
                           //         .elementAt(3),
                           //     style: TextStyle(color: Colors.white)),
                         ),
@@ -156,19 +149,9 @@ class _PlayerScreen2State extends State<PlayerScreen2> {
                 ),
               ],
             )),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.58,
-              child: Container(
-                child: FlickVideoPlayer(
-                  preferredDeviceOrientation: [DeviceOrientation.landscapeLeft],
-                  flickManager: flickManager,
-                  flickVideoWithControls: FlickVideoWithControls(
-                    controls: FlickPortraitControls(),
-                  ),
-                  //  flickVideoWithControlsFullscreen: FlickVideoWithControls(),
-                ),
-              ),
-            ),
+            MyVideoPlyer(
+              url: activeURL,
+            )
           ],
         ),
       ),
